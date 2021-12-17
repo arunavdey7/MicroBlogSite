@@ -9,6 +9,7 @@ from rest_framework.decorators import api_view
 from micro_blog_site_api.serializers import AuthorsSerializer,PostsSerializer, CategoriesSerializer, LikesSerializer, CommentsSerializer
 from micro_blog_site_api.models import Authors, Categories, Comments, Likes, Posts
 import hashlib, jwt
+from datetime import datetime
 
 # Create your views here.
 SECRET = 'JGJDLKZUENIBVE61749456'
@@ -107,7 +108,7 @@ def get_all_posts(request):
                     'author' : Authors.objects.get(id = post.author_id)
                 }
             )
-        posts.sort(key = lambda post:int(post.likes_count), reverse = True))
+        posts.sort(key = lambda post:int(post.likes_count), reverse = True)
         return Response({
             'success': True,
             'posts': posts
@@ -140,7 +141,7 @@ def posts_of_category(request):
                     'author' : Authors.objects.get(id = post.author_id)
                 }
             )
-        posts.sort(key = lambda post:int(post.likes_count), reverse = True))
+        posts.sort(key = lambda post:int(post.likes_count), reverse = True)
         return Response({
             'success': True,
             'posts': posts
@@ -175,7 +176,7 @@ def author_posts_by_reverse_chrono(request):
                     'author' : Authors.objects.get(id = post.author_id)
                 }
             )
-        posts.sort(key = lambda post: post.created_at, reverse = True))
+        posts.sort(key = lambda post: post.created_at, reverse = True)
         return Response({
             'success': True,
             'posts': posts
@@ -210,7 +211,7 @@ def author_posts_by_likes(request):
                     'author' : Authors.objects.get(id = post.author_id)
                 }
             )
-        posts.sort(key = lambda post: int(post.likes_count), reverse = True))
+        posts.sort(key = lambda post: int(post.likes_count), reverse = True)
         return Response({
             'success': True,
             'posts': posts
@@ -249,7 +250,143 @@ def get_post(request):
         return Response(
             {
                 'success': False,
-                'message': err_msg
+                'message': str(err_msg) 
+            }
+        )
+    
+@api_view(['GET'])
+def about_author(request):
+    try:
+        author_id = request.headers['author_id']
+        author = Authors.objects.get(id = author_id)
+        author_info = {
+                        'first_name': author.first_name,
+                        'last_name': author.last_name,
+                        'email': author.email,
+                        'bio': author.bio,
+                        'profile_pic': author.profile_pic
+                    }
+        return Response(
+            {
+                'success': True,
+                'author_info': author_info
+            }
+        )
+    except Exception as err_msg:
+        return Response(
+            {
+                'success': False,
+                'message': str(err_msg) 
+            }
+        )
+
+@api_view(['POST'])
+def new_post(request):
+    try:
+        token = request.headers['token']
+        _email = jwt.decode(token, SECRET, algorithms=["HS256"]).email
+        
+        _author_id = Authors.objects.get(email = _email).author_id
+        _heading = request.data['heading']
+        _created_at = request.data['created_at']
+        _updated_at = request.data['updated_at']
+        _description = request.data['description']
+        _likes_count = request.data['likes_count']
+        _category_id = request.data['category_id']
+        
+        new_post = Posts(
+            heading = _heading,
+            created_at = _created_at,
+            updated_at = _updated_at,
+            description = _description,
+            content = _content,
+            likes_count = _likes_count,
+            category_id = _category_id,
+            author_id = _author_id
+        ) 
+        new_post.save()
+        return Response(
+            {
+                'success': True
+            }
+        )
+    except Exception as err_msg:
+        return Response(
+            {
+                'success': False,
+                'message': str(err_msg) 
+            }
+        )
+
+@api_view(['GET'])
+def like(request):
+    try:
+        token = request.headers['token']
+        _post_id = request.headers['post_id']
+        _email = jwt.decode(token, SECRET, algorithms=["HS256"]).email
+        _author_id = Authors.objects.get(email = _email).author_id
+        current_likes_count = Posts.objects.get(post_id = _post_id).likes_count
+        post = Posts(post_id = _post_id, author_id = _author_id)
+        post.likes_count = int(current_likes_count) + 1
+        post.save()
+        return Response(
+            {
+                'success': True
+            }
+        )
+    except Exception as err_msg:
+        return Response(
+            {
+                'success': False,
+                'message': str(err_msg)
+            }
+        )
+
+@api_view(['GET'])
+def dislike(request):
+    try:
+        token = request.headers['token']
+        _post_id = request.headers['post_id']
+        _email = jwt.decode(token, SECRET, algorithms=["HS256"]).email
+        _author_id = Authors.objects.get(email = _email).author_id
+        current_likes_count = Posts.objects.get(post_id = _post_id).likes_count
+        post = Posts(post_id = _post_id, author_id = _author_id)
+        post.likes_count = int(current_likes_count) - 1
+        post.save()
+        return Response(
+            {
+                'success': True
+            }
+        )
+    except Exception as err_msg:
+        return Response(
+            {
+                'success': False,
+                'message': str(err_msg)
+            }
+        )
+    
+@api_view(['POST'])
+def comment(request):
+    try:
+        token = request.headers['token']
+        _comment = request.data['comment']
+        _post_id = request.data['post_id']
+        _email = jwt.decode(token, SECRET, algorithms=["HS256"]).email
+        _author_id = Authors.objects.get(email = _email)
+        _date_time = datetime.now()
+        new_comment = Comments(comment = _comment, post_id = _post_id, date_time = _date_time, author_id = _author_id)
+        new_comment.save()
+        return Response(
+            {
+                'success': True
+            }
+        )
+    except Exception as err_msg:
+        return Response(
+            {
+                'success': False,
+                'message': str(err_msg)
             }
         )
 '''
@@ -284,12 +421,12 @@ GET --> DONE
 headers:
 	post_id
 
-GET
+GET --> DONE
 /api/aboutauthor
 headers:
 	author_id
 
-POST
+POST --> DONE
 /api/newpost
 headers:
     jwt
@@ -303,19 +440,19 @@ body:
 	category_id
 	author_id
 
-GET
+GET --> DONE
 /api/like
 header:
 	jwt
 	post_id
 
-GET
+GET --> DONE
 /api/dislike
 header:
 	jwt
 	post_id
 
-POST
+POST --> DONE
 /api/comment
 headers:
     jwt
@@ -324,7 +461,13 @@ body:
 	post_id
 
 GET
+/api/getcommentsforpost
+headers:
+    post_id
+
+GET
 /api/removecomment
+
 header:
 	comment_id
 
@@ -335,12 +478,12 @@ header:
 	post_id
 
 GET
-/api/getpostsforuserbychrono
+/api/getpostsforauthorbychrono
 header:
     author_id
 
 GET
-/api/getpostsforuserbylikes
+/api/getpostsforauthorbylikes
 header:
     author_id
 
