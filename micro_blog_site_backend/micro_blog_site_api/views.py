@@ -387,11 +387,32 @@ def comment(request):
         token = request.headers['token']
         _comment = request.data['comment']
         _post_id = request.data['post_id']
-        _email = jwt.decode(token, SECRET, algorithms=["HS256"]).email
+        _email = jwt.decode(token, SECRET, algorithms=["HS256"])['email']
         _author_id = Authors.objects.get(email = _email)
         _date_time = datetime.now()
-        new_comment = Comments(comment = _comment, post_id = _post_id, date_time = _date_time, author_id = _author_id)
+        new_comment = Comments(comment = _comment, post_id = Posts.objects.get(id = _post_id), date_time = _date_time, author_id = _author_id)
         new_comment.save()
+        return Response(
+            {
+                'success': True
+            }
+        )
+    except Exception as err_msg:
+        return Response(
+            {
+                'success': False,
+                'message': str(err_msg)
+            }
+        )
+
+@api_view(['POST'])
+def uncomment(request):
+    try:
+        token = request.headers['token']
+        _post_id = request.data['post_id']
+        _email = jwt.decode(token, SECRET, algorithms=["HS256"])['email']
+        _author_id = Authors.objects.get(email = _email)
+        Comments.objects.filter(author_id = _author_id, post_id = Posts.objects.get(id = _post_id)).delete()
         return Response(
             {
                 'success': True
