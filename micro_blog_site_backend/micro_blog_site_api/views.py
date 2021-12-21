@@ -116,7 +116,6 @@ def get_all_posts(request):
     except Exception as err_msg:
         return Response({
             'success': False,
-            'posts': [],
             'message': str(err_msg)
         })
 
@@ -282,18 +281,34 @@ def about_author(request):
 
 @api_view(['POST'])
 def new_post(request):
+    flag = False
     try:
         token = request.headers['token']
-        _email = jwt.decode(token, SECRET, algorithms=["HS256"]).email
-        
-        _author_id = Authors.objects.get(email = _email).author_id
+        _email = jwt.decode(token, SECRET, algorithms=["HS256"])['email']
+        _author_id = Authors.objects.get(email = _email)
         _heading = request.data['heading']
+        _content = request.data['content']
         _created_at = request.data['created_at']
         _updated_at = request.data['updated_at']
         _description = request.data['description']
         _likes_count = request.data['likes_count']
-        _category_id = request.data['category_id']
-        
+        _category = request.data['category']
+        _categories = Categories.objects.all()
+        for category_item in _categories:
+            if(_category.upper() == category_item.category.upper()):
+                _category_id = category_item
+                flag = True
+                break
+        if(flag == False):
+            new_category = Categories(category = _category)
+            new_category.save()
+            _categories = Categories.objects.all()
+            for category_item in _categories:
+                if(_category.upper() == category_item.category.upper()):
+                    _category_id = category_item
+                    flag = False
+                    break
+
         new_post = Posts(
             heading = _heading,
             created_at = _created_at,
@@ -389,6 +404,10 @@ def comment(request):
                 'message': str(err_msg)
             }
         )
+
+
+
+
 '''
 Required End Points:
 
