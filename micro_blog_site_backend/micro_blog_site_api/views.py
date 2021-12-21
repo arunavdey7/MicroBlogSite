@@ -96,6 +96,7 @@ def get_all_posts(request):
         for post in _posts:
             posts.append(
                 {
+                    'post_id' : post.id,
                     'heading' : post.heading,
                     'created_at': post.created_at,
                     'updated_at' : post.updated_at,
@@ -337,13 +338,13 @@ def new_post(request):
 def like(request):
     try:
         token = request.headers['token']
-        _post_id = request.headers['post_id']
-        _email = jwt.decode(token, SECRET, algorithms=["HS256"]).email
-        _author_id = Authors.objects.get(email = _email).author_id
-        current_likes_count = Posts.objects.get(post_id = _post_id).likes_count
-        post = Posts(post_id = _post_id, author_id = _author_id)
-        post.likes_count = int(current_likes_count) + 1
-        post.save()
+        _post_id = request.data['post_id']
+        _email = jwt.decode(token, SECRET, algorithms=["HS256"])['email']
+        _author_id = Authors.objects.get(email = _email)
+        current_likes_count = Posts.objects.get(id = _post_id).likes_count
+        Posts.objects.filter(id = _post_id).update(likes_count = current_likes_count + 1)
+        likes = Likes(author_id = _author_id, post_id = Posts.objects.get(id = _post_id))
+        likes.save()
         return Response(
             {
                 'success': True
@@ -361,13 +362,12 @@ def like(request):
 def dislike(request):
     try:
         token = request.headers['token']
-        _post_id = request.headers['post_id']
-        _email = jwt.decode(token, SECRET, algorithms=["HS256"]).email
-        _author_id = Authors.objects.get(email = _email).author_id
-        current_likes_count = Posts.objects.get(post_id = _post_id).likes_count
-        post = Posts(post_id = _post_id, author_id = _author_id)
-        post.likes_count = int(current_likes_count) - 1
-        post.save()
+        _post_id = request.data['post_id']
+        _email = jwt.decode(token, SECRET, algorithms=["HS256"])['email']
+        _author_id = Authors.objects.get(email = _email)
+        current_likes_count = Posts.objects.get(id = _post_id).likes_count
+        Posts.objects.filter(id = _post_id).update(likes_count = current_likes_count - 1)
+        Likes.objects.filter(author_id = _author_id, post_id = Posts.objects.get(id = _post_id)).delete()
         return Response(
             {
                 'success': True
