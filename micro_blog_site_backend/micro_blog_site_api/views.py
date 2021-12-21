@@ -92,7 +92,7 @@ def login(request):
 def get_all_posts(request):
     posts = []
     try:
-        _posts = Posts.objects.get()
+        _posts = Posts.objects.all()
         for post in _posts:
             posts.append(
                 {
@@ -102,13 +102,13 @@ def get_all_posts(request):
                     'description' : post.description,
                     'content' : post.content,
                     'likes_count' : post.likes_count,
-                    'category_id' : post.category_id,
-                    'category' : Categories.objects.get(id = post.category_id).category,
-                    'author_id' : post.author_id,
-                    'author' : Authors.objects.get(id = post.author_id)
+                    'category_id' : post.category_id.id,
+                    'category' : post.category_id.category,
+                    'author_id' : post.author_id.id,
+                    'author' : post.author_id.first_name + ' ' + post.author_id.last_name
                 }
             )
-        posts.sort(key = lambda post:int(post.likes_count), reverse = True)
+        posts.sort(key = lambda post:int(post['likes_count']), reverse = True)
         return Response({
             'success': True,
             'posts': posts
@@ -172,7 +172,7 @@ def author_posts_by_reverse_chrono(request):
                     'category_id' : post.category_id,
                     'category' : Categories.objects.get(id = post.category_id).category,
                     'author_id' : post.author_id,
-                    'author' : Authors.objects.get(id = post.author_id)
+                    'author' : Authors.objects.get(id = post.author_id).first_name
                 }
             )
         posts.sort(key = lambda post: post.created_at, reverse = True)
