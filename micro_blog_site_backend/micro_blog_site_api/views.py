@@ -10,9 +10,20 @@ from micro_blog_site_api.serializers import AuthorsSerializer,PostsSerializer, C
 from micro_blog_site_api.models import Authors, Categories, Comments, Likes, Posts
 import hashlib, jwt
 from datetime import datetime
+import logging
 
 # Create your views here.
 SECRET = 'JGJDLKZUENIBVE61749456'
+
+#Setting up a logging facility
+logging.basicConfig(filename="logs.log",
+                    format='%(asctime)s %(message)s',
+                    filemode='w')
+#Creating an object
+logger=logging.getLogger()
+  
+#Setting the threshold of logger to DEBUG
+logger.setLevel(logging.DEBUG)
 
 @api_view(['POST'])
 def register_author(request):
@@ -426,7 +437,37 @@ def uncomment(request):
             }
         )
 
-
+@api_view(['POST'])
+def get_comments_for_post(request):
+    try:
+        _post_id = request.data['post_id']
+        comments = Comments.objects.filter(post_id = Posts.objects.get(id = _post_id))
+        comments_list = []
+        for cmnt in comments:
+            logger.info("Loading Comments")
+            comments_list.append(
+                {
+                    'author_id' : cmnt.author_id.id, 
+                    'author' : cmnt.author_id.first_name + ' ' + cmnt.author_id.last_name,
+                    'comment' : cmnt.comment,
+                    'post_id' : cmnt.post_id.id,
+                    'date_time' : cmnt.date_time
+                }
+            )
+        return Response(
+            {
+                'success': True,
+                'comments': comments_list
+            }
+        )
+    except Exception as err_msg:
+        return Response(
+            {
+                'success' : False,
+                'message' : str(err_msg)
+            }
+        )
+        
 
 
 '''
@@ -500,16 +541,18 @@ body:
 	comment
 	post_id
 
+POST --> DONE
+/api/uncomment
+headers:
+    jwt
+body:
+	post_id
+
+
 GET
 /api/getcommentsforpost
 headers:
     post_id
-
-GET
-/api/removecomment
-
-header:
-	comment_id
 
 GET
 /api/removepost
