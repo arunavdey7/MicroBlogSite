@@ -468,7 +468,26 @@ def get_comments_for_post(request):
             }
         )
         
-
+@api_view(['POST'])
+def remove_post(request):
+    try:
+        token = request.headers['token']
+        _email = jwt.decode(token, SECRET, algorithms=["HS256"])['email']
+        _post_id = request.data['post_id']
+        logger.info('Email ',_email)
+        Posts.objects.filter(id = _post_id, author_id = Authors.objects.get(email = _email)).delete()
+        return Response(
+            {
+                'success' : True
+            }
+        )
+    except Exception as err_msg:
+        return Response(
+            {
+                'success': False,
+                'message' : str(err_msg)
+            }
+        )
 
 '''
 Required End Points:
@@ -478,26 +497,31 @@ GET --> DONE
 
 GET --> DONE
 /api/postsofcategory
+(For all -> Self + Authors)
 headers:
 	category
 
 GET --> DONE
+(For Self)
 /api/authorpostsbyreversechrono
 headers:
 	jwt
 	
 
 GET --> DONE
+(For Self)
 /api/authorpostsbylikes
 headers:
 	jwt
 
 GET --> DONE
+(For Self)
 /api/authorlikedposts
 headers:
 	jwt
 
 GET --> DONE
+(For Others)
 /api/getpost
 headers:
 	post_id
@@ -549,12 +573,13 @@ body:
 	post_id
 
 
-GET
-/api/getcommentsforpost
+POST --> DONE
+(Gets all the comments for a particular post)
+/api/comments/
 headers:
     post_id
 
-GET
+POST --> DONE
 /api/removepost
 header:
 	jwt
@@ -562,17 +587,14 @@ header:
 
 GET
 /api/getpostsforauthorbychrono
+(For other authors)
 header:
     author_id
 
 GET
 /api/getpostsforauthorbylikes
+(For other authors)
 header:
     author_id
-
-GET
-/api/getlikesforpost
-header:
-    post_id
 
 '''

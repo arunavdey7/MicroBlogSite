@@ -1,5 +1,5 @@
 from django.urls import include, path
-from micro_blog_site_api.views import dislike, new_post, register_author, get_author_info, login, get_all_posts,new_post, like, dislike, comment, uncomment, get_comments_for_post
+from micro_blog_site_api.views import dislike, new_post, register_author, get_author_info, login, get_all_posts,new_post, like, dislike, comment, uncomment, get_comments_for_post,remove_post
 from rest_framework import routers
 
 
@@ -15,4 +15,5 @@ urlpatterns = [
     path('api/comment/', comment),
     path('api/uncomment/', uncomment),
     path('api/comments/', get_comments_for_post),
+    path('api/removepost/', remove_post),
 ]
