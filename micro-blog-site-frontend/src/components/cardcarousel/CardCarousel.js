@@ -8,7 +8,7 @@ const CardCarousel = () =>
 {
     var settings = {
         dots: true,
-        infinite: false,
+        infinite: true,
         speed: 500,
         slidesToShow: 4,
         slidesToScroll: 4,
@@ -19,6 +19,7 @@ const CardCarousel = () =>
             settings: {
               slidesToShow: 3,
               slidesToScroll: 3,
+              initialSlide:0,
               infinite: true,
               dots: true
             }
@@ -28,14 +29,17 @@ const CardCarousel = () =>
             settings: {
               slidesToShow: 2,
               slidesToScroll: 2,
-              initialSlide: 2
+              initialSlide: 0,
+              dots: true
             }
           },
           {
             breakpoint: 480,
             settings: {
               slidesToShow: 1,
-              slidesToScroll: 1
+              slidesToScroll: 1,
+              initialSlide: 0,
+              dots: true
             }
           }
         ]
@@ -43,6 +47,15 @@ const CardCarousel = () =>
     return(
         <div className='slider_container'>
             <Slider {...settings}>
+                <div className='card'>
+                    <Card/>
+                </div>
+                <div className='card'>
+                    <Card/>
+                </div>
+                <div className='card'>
+                    <Card/>
+                </div>
                 <div className='card'>
                     <Card/>
                 </div>
