@@ -4,10 +4,12 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import Navbar from './components/navbar/Navbar';
+import CardCarousel from './components/cardcarousel/CardCarousel';
 
 ReactDOM.render(
   <React.StrictMode>
-    <Navbar />
+    <Navbar/>
+    
   </React.StrictMode>,
   document.getElementById('root')
 );
