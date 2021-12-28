@@ -10,7 +10,6 @@ ReactDOM.render(
   <React.StrictMode>
     <Navbar/>
     <CardCarousel/>
-    
   </React.StrictMode>,
   document.getElementById('root')
 );
