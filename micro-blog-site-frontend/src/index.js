@@ -9,7 +9,7 @@ import CardCarousel from './components/cardcarousel/CardCarousel';
 ReactDOM.render(
   <React.StrictMode>
     <Navbar/>
-    
+    <CardCarousel/>
   </React.StrictMode>,
   document.getElementById('root')
 );
