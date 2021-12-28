@@ -1,0 +1,157 @@
+.navbar
+{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    height: 50px;
+    position: relative;
+    top: 0px;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    border-radius: 0px 0px 5px 5px;
+    background-color: darkslategrey;
+}
+.logo_container
+{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: inherit;
+    text-align:left;
+    padding-left: 10px;
+    width: 100%;
+    /* Add a media query for smaller screen */
+}
+@media screen and (max-width: 768px) {
+    .logo_container {
+        text-align:center !important;
+    }
+    .link_container
+    {
+        display: none !important;
+    }
+    .hamburger
+    {
+        display: flex !important;
+    }
+    .avatar
+    {
+        display: none !important;
+    }
+    .dropdown_menu
+    { 
+        width: 40%;
+        height: max-content;
+        background-color: darkslategrey;
+        border-radius: 0px 0px 5px 5px;
+        flex-direction: column;
+        animation: fade 1s linear 0ms;
+    }
+    @keyframes fade {
+        from {opacity: 0;}
+        to {opacity: 1;}
+    }
+    .dropdown_menu_ON
+    { 
+        display: flex !important;
+        width: 40%;
+        height: max-content;
+        background-color: darkslategrey;
+        border-radius: 0px 0px 5px 5px;
+        flex-direction: column;
+
+    }
+    .dropdown_menu_item
+    {
+        border-width: 0px 0px 2px 0px;
+        border-color: darkgrey;
+        border-style: solid;
+        margin: 5px;
+        
+    }
+    .dropdown_menu_container
+    {
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-end;
+    }
+  }
+@media screen and (max-width: 1024px)
+{
+    .link_box
+    {
+        margin: 25px;
+    }
+}
+@media screen and (max-width: 1200px)
+{
+    .link_box
+    {
+        margin-left: 0px;
+        margin-right: 0px;
+    }
+}
+.brand_text
+{
+    color: white;
+    font-size: 1.7rem;
+}
+.link_container
+{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+}
+.selected
+{
+    border: 1px solid red;
+    padding: 0;
+}
+.link_box
+{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-left:2vw;
+    margin-right:2vw;
+}
+.hamburger
+{
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    padding-right: 10px;
+    color: white;
+}
+a 
+{
+    color: white;
+    text-decoration: none;
+}
+a:hover
+{
+    font-size: 25px;
+}
+.profile_pic
+{
+    border-radius: 50%;
+}
+.avatar
+{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding-right: 10px;
+}
+.user_name_container
+{
+    color: white;
+    font-weight: bolder;
+}
+.user_name_container:hover
+{
+    cursor: pointer;
+}
+.dropdown_menu
+{
+    display: none;
+}
