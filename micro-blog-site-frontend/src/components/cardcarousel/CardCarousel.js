@@ -37,7 +37,7 @@ const CardCarousel = () =>
               slidesToShow: 2,
               slidesToScroll: 2,
               initialSlide: 0,
-              dots: true
+              
             }
           },
           {
@@ -46,7 +46,8 @@ const CardCarousel = () =>
               slidesToShow: 1,
               slidesToScroll: 1,
               initialSlide: 0,
-              dots: true
+              dots: false
+          
             }
           }
         ]

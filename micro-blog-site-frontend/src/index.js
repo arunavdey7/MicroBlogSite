@@ -5,11 +5,13 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import Navbar from './components/navbar/Navbar';
 import CardCarousel from './components/cardcarousel/CardCarousel';
+import RichTextEditor from './components/richtexteditor/RichTextEditor'
 
 ReactDOM.render(
   <React.StrictMode>
     <Navbar/>
     <CardCarousel/>
+    <RichTextEditor/>
   </React.StrictMode>,
   document.getElementById('root')
 );
