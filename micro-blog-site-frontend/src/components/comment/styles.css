@@ -2,14 +2,14 @@
 {
     width: 50%;
     border-radius: 7px;
-    width: inherit;
+    width: 100%;
     height: fit-content;
     padding: 1%;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
-    margin: 5%;
+    margin-top: 1%;
     
 }
 .commentor_name_container

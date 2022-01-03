@@ -7,13 +7,13 @@ import Navbar from './components/navbar/Navbar';
 import CardCarousel from './components/cardcarousel/CardCarousel';
 import RichTextEditor from './components/richtexteditor/RichTextEditor'
 import Comment from './components/comment/Comment';
+import CommentList from './components/commentlist/CommentList';
 
 ReactDOM.render(
   <React.StrictMode>
     <Navbar/>
     <RichTextEditor/>
-    <CardCarousel/>
-    <Comment/>
+    <CommentList/>
   </React.StrictMode>,
   document.getElementById('root')
 );
