@@ -8,12 +8,12 @@ import CardCarousel from './components/cardcarousel/CardCarousel';
 import RichTextEditor from './components/richtexteditor/RichTextEditor'
 import Comment from './components/comment/Comment';
 import CommentList from './components/commentlist/CommentList';
+import PostContainer from './components/postcontainer/PostContainer';
 
 ReactDOM.render(
   <React.StrictMode>
     <Navbar/>
-    <RichTextEditor/>
-    <CommentList/>
+    <PostContainer/>
   </React.StrictMode>,
   document.getElementById('root')
 );

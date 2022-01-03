@@ -4,12 +4,12 @@
     flex-direction: column;
     overflow-y: scroll;
     height: 50vh;
-    margin-left: 5vw;
-    margin-right: 5vw;
-    padding-left: 2%;
-    padding-right: 3.5%;
+    margin-left: 4vw;
+    margin-right: 4vw;
+    padding-left: 5%;
+    padding-right: 5.8%;
+    padding-bottom: 1%;
     overflow-x: hidden;
     overflow-y: scroll;
-    border: 1px solid black;
 }
 .comment_list_container::-webkit-scrollbar { width: 0 !important }
