@@ -6,12 +6,14 @@ import reportWebVitals from './reportWebVitals';
 import Navbar from './components/navbar/Navbar';
 import CardCarousel from './components/cardcarousel/CardCarousel';
 import RichTextEditor from './components/richtexteditor/RichTextEditor'
+import Comment from './components/comment/Comment';
 
 ReactDOM.render(
   <React.StrictMode>
     <Navbar/>
-    <CardCarousel/>
     <RichTextEditor/>
+    <CardCarousel/>
+    <Comment/>
   </React.StrictMode>,
   document.getElementById('root')
 );
