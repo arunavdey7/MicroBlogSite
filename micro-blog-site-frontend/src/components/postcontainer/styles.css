@@ -1,0 +1,6 @@
+.posts_container
+{
+    height: 80vh;
+    overflow-x: scroll;
+    padding: 1%;
+}

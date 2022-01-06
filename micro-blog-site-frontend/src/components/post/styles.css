@@ -1,7 +1,5 @@
 .post_body_container
 {
-    
-    border: 1px solid red;
     border-radius: 5px;
     box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
     display: flex;
@@ -9,6 +7,9 @@
     height: max-content;
     margin-right: 5vw;
     margin-left: 5vw;
+    margin-top: 1%;
+    margin-bottom: 1%;
+    transition: transform .2s;
 }
 @media screen and (max-width: 768px) {
     .post_body_container
@@ -17,11 +18,11 @@
         width: inherit !important;
         padding-left:1%;
         padding-right: 3%;
+        padding-top: 1%;
     }
     .post_thumbnail
     {
-        width: 100% !important;
-        margin: 0px !important;
+        width:100% !important;
     }
     .post_content_container
     {
@@ -30,19 +31,14 @@
 }
 .post_thumbnail
 {
-    border: 1px solid black;
     width: 30%;
     height: match-parent;
-    margin-top: 1%;
-    margin-left: 1%;
-    margin-bottom: 1%;
-    margin-right: 1%;
     border-radius: 5px;
-    padding: 1%;
+    margin: 1%;
+    overflow: hidden;
 }
 .post_content_container
 {
-    border: 1px solid red;
     width: 70%;
     height: max-content;
     margin-top: 1%;
@@ -55,7 +51,6 @@
 }
 .post_title
 {
-    border:1px solid red;
     margin-top: 1%;
     margin-left: 1%;
     margin-bottom: 1%;
@@ -69,7 +64,6 @@
 }
 .post_description
 {
-    border: 1px solid red;
     margin-top: 1%;
     margin-left: 1%;
     margin-bottom: 1%;
@@ -77,4 +71,31 @@
     border-radius: 5px;
     height: 80%;
     padding: 1%;
+}
+.utility_bar_container
+{
+    height: fit-content;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding-left: 5%;
+    padding-right: 5%;
+    padding-top: 1%;
+    padding-bottom: 1%;
+    margin: 1%;
+    border-radius: 5px;
+}
+.label_span
+{
+    padding-left: 5px;
+}
+.label_span:hover
+{
+    cursor: pointer;
+    color: blue;
+}
+.post_body_container:hover
+{
+    cursor: pointer;
+    transform: scale(1.05);
 }

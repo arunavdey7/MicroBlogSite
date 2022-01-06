@@ -7,6 +7,8 @@ const PostContainer = () => {
     return(
         <div className="posts_container">
             <Post/>
+            <Post/>
+            <Post/>
         </div>
     )
 }
