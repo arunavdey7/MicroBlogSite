@@ -9,13 +9,14 @@ export const login = (email,password) => {
     var requestOptions = {
         method: 'POST',
         body: JSON.stringify(credentials),
-        redirect: 'follow',
-        mode:'no-cors'
-
-      };
+        mode:'cors',
+        headers:{
+            'Content-type':'Application/json'
+        }
+      }
       
-      fetch("http://127.0.0.1:8000/api/login/", requestOptions)
-        .then(response => response.text())
+      fetch("/api/login/", requestOptions)
+        .then(response => response.json())
         .then(result => {
             console.log(result)
             if(result.success)
