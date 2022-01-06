@@ -1,6 +1,9 @@
 .posts_container
 {
     height: 80vh;
-    overflow-x: scroll;
+    overflow-x: hidden;
     padding: 1%;
+    overflow-y: scroll;
+
 }
+.posts_container::-webkit-scrollbar { width: 0 !important }

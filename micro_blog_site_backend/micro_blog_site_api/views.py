@@ -52,9 +52,9 @@ def register_author(request):
             return Response({'success': False,
                              'message': str(err_msg)
             })
-    except:
+    except Exception as err_msg:
         return Response({'success': False,
-                         'message': 'Deformed Body Request'
+                         'message': str(err_msg)
             })
 
 @api_view(['GET'])

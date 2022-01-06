@@ -1,8 +1,25 @@
-import React from "react";
+import React,{useState} from "react";
 import './styles.css'
 
 const Post = () => {
 
+    const [liked,setLikedStatus] =  useState(false);
+    const [likesCount, setLikesCount] = useState(0);
+    const [commentsCount, setCommentsCount] = useState(6);
+
+    const like = () => {
+        if(liked)
+        {
+            setLikedStatus(false)
+            setLikesCount(likesCount - 1)
+        }
+        else
+        {
+            setLikedStatus(true)
+            setLikesCount(likesCount + 1)
+        }
+        
+    }
     return(
         <div className="post_body_container">
             <div className="post_thumbnail">
@@ -24,12 +41,21 @@ const Post = () => {
                     </div>
                     <div>
                         <i className='fa fa-comment'></i>
-                        <span className='label_span'>Comments </span>
+                        <span className='label_span'>{commentsCount} </span>
                     </div>
-                    <div>
-                        <i className='fa fa-heart'></i>
-                        <span className='label_span'>33</span>
-                    </div>
+                    {
+                        liked ? 
+                        <div onClick={like}>
+                            <i className='fa fa-heart'></i>
+                            <span className='label_span'>{likesCount}</span>
+                        </div>
+                        :
+                        <div onClick={like}>
+                            <i className='fa fa-heart-o'></i>
+                            <span className='label_span'>{likesCount}</span>
+                        </div>
+                    }
+                    
                 </div>
             </div>
         </div>

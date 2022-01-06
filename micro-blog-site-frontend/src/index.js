@@ -9,11 +9,11 @@ import RichTextEditor from './components/richtexteditor/RichTextEditor'
 import Comment from './components/comment/Comment';
 import CommentList from './components/commentlist/CommentList';
 import PostContainer from './components/postcontainer/PostContainer';
+import Login from './pages/login/Login';
 
 ReactDOM.render(
   <React.StrictMode>
-    <Navbar/>
-    <PostContainer/>
+    <Login/>
   </React.StrictMode>,
   document.getElementById('root')
 );
