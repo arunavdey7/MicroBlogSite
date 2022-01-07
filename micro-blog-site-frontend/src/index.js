@@ -10,11 +10,13 @@ import Comment from './components/comment/Comment';
 import CommentList from './components/commentlist/CommentList';
 import PostContainer from './components/postcontainer/PostContainer';
 import Login from './pages/login/Login';
+import {getAllPosts} from './utility/PostsUtility';
+
 
 ReactDOM.render(
-  <React.StrictMode>
-    <Login/>
-  </React.StrictMode>,
+  
+    <PostContainer/>
+  ,
   document.getElementById('root')
 );
 

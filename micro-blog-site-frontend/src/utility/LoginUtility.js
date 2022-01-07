@@ -1,7 +1,7 @@
+
 export const login = (email,password) => {
 
-    var isSuccessfull = false;
-    var jwt_token = null;
+    
     const credentials = {
         email,
         password
@@ -18,23 +18,12 @@ export const login = (email,password) => {
       fetch("/api/login/", requestOptions)
         .then(response => response.json())
         .then(result => {
-            console.log(result)
             if(result.success)
             {
-                isSuccessfull = true;
-                jwt_token = result.token
+                var jwt_token = result.token
+                localStorage.setItem('token',jwt_token)
             }
         })
         .catch(error => console.log('error', error));
-    if(isSuccessfull)
-    {
-        return {
-            success:true,
-            token:jwt_token
-        }
-    }
-    return {
-        success:false,
-        token:null
-    }
+    
 }

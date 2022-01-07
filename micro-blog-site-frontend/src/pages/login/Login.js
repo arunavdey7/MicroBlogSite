@@ -10,7 +10,7 @@ const Login = () => {
 
     const handleLogin = () =>
     {
-        authenticate(email,password)
+        //console.log(authenticate(email,password))
     }
 
     return(
