@@ -15,7 +15,7 @@ export const login = (email,password) => {
       };
       
       fetch("http://127.0.0.1:8000/api/login/", requestOptions)
-        .then(response => response.text())
+        .then(response => response.json())
         .then(result => {
             console.log(result)
             if(result.success)
